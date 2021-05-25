@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    background-color: #282c34;
+    color: white;
+}
+
+h2 {
+    font-family: monospace;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+h6 {
+    font-family: monospace;
+    margin-bottom: 20px;
+}
