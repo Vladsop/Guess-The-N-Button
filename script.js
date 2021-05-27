@@ -1,7 +1,8 @@
 $("#restartgame").hide();
 var buttons_number = 0;
-var button_name = "";
 var winner = 0;
+var button_name = "";
+var text = "";
 
 //Mapping "Enter" key to trigger the "Generate Button"
 document.getElementById("buttons_number_input")
@@ -19,17 +20,18 @@ function generate_buttons() {
     buttons_number = document.getElementById("buttons_number_input").value;
     winner = Math.floor(Math.random() * parseInt(buttons_number)) + 1;
     if (buttons_number <= 0) {
-        return document.getElementById("message").innerHTML = "Please enter a number higher than 0!"
+        text = "Please enter a number higher than 0!"
     } else if (isNaN(buttons_number)) {
-        return document.getElementById("message").innerHTML = "Please enter a number and try again!"
+        text = "Please enter a number and try again!"
     } else {
         document.getElementById("generate_buttons").onclick = null;
         for (let i = 1, j = 0; i <= buttons_number; ++i) {
             button_name = "Button " + i.toString();
-            $('#generated_buttons').append('<button class="btn btn-dark" id=' + i + ' style="margin-right: 5px; margin-bottom: 5px;" onclick="check_button(id);">' + button_name + '</button>');
+            $('#generated_buttons').append('<button class="btn btn-dark" id=' + i + ' style="margin-right: 5px; margin-bottom: 5px;" onclick = "check_button(id);" > ' + button_name + ' < /button>');
         }
+        text = "Try your luck and pick one button. Will it be the winner? Let's see:"
     }
-    return document.getElementById("message").innerHTML = "Try your luck and pick one button. Will it be the winner? Let's see:"
+    print_message();
 }
 
 //Checking if the winning button randomly generated in the function above is equal to the id of the clicked button.
@@ -43,10 +45,12 @@ function check_button(id) {
             }
         });
         $("#restartgame").show()
-        return document.getElementById("message").innerHTML = "Congratulations, You guessed it!"
+        text = "Congratulations, You guessed it!"
+    } else {
+        $("#restartgame").show()
+        text = "Sorry, Would you like to try again?"
     }
-    $("#restartgame").show()
-    return document.getElementById("message").innerHTML = "Sorry, Would you like to try again?"
+    print_message(text);
 }
 
 //I think it's a good practice to restart the game on the same static webpage than doing a page refresh, the expected result is the same,
@@ -60,5 +64,10 @@ function reset() {
     winner = Math.floor(Math.random() * parseInt(buttons_number)) + 1;
     $("#restartgame").hide();
     $("#generated_buttons").empty();
-    return document.getElementById("message").innerHTML = "";
+    print_message(text = "");
+}
+
+//Printing useful information for users;
+function print_message(text) {
+    return document.getElementById("message").innerHTML = text;
 }
